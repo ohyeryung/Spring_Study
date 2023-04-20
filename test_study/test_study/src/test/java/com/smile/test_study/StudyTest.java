@@ -2,9 +2,14 @@ package com.smile.test_study;
 
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.converter.ArgumentConversionException;
+import org.junit.jupiter.params.converter.ConvertWith;
+import org.junit.jupiter.params.converter.SimpleArgumentConverter;
+import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.ValueSource;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
 class StudyTest {
@@ -44,11 +49,23 @@ class StudyTest {
         System.out.println("Repeat Test " + repetitionInfo.getCurrentRepetition() + "/" + repetitionInfo.getTotalRepetitions());
     }
 
-    @DisplayName("오늘의 날씨")
     @ParameterizedTest(name = "{index} {displayName} message={0}")
-    @ValueSource(strings = { "The", "weather", "is", "getting", "warmer." })
-    void parameterizedTest(String message) {
-        System.out.println("message = " + message);
+    //@ValueSource(strings = { "The", "weather", "is", "getting", "warmer." })
+    // @ValueSource(ints = {10, 20, 40})
+    @CsvSource({"10, 'java'", "20, spring "})
+    void parameterizedTest(Integer limit, String name) {
+        Study study = new Study(limit, name);
+        System.out.println(study);
+    }
+
+
+    static class StudyConverter extends SimpleArgumentConverter {
+
+        @Override
+        protected Object convert(Object source, Class<?> targetType) throws ArgumentConversionException {
+            assertEquals(Study.class, targetType, "Can only convert to Study");
+            return  new Study(Integer.parseInt(source.toString()));
+        }
     }
 
 
