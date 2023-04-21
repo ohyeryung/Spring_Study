@@ -1,19 +1,30 @@
 package com.smile.test_study;
 
 import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.junit.jupiter.api.extension.ParameterContext;
+import org.junit.jupiter.api.extension.RegisterExtension;
 import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.aggregator.AggregateWith;
+import org.junit.jupiter.params.aggregator.ArgumentsAccessor;
+import org.junit.jupiter.params.aggregator.ArgumentsAggregationException;
+import org.junit.jupiter.params.aggregator.ArgumentsAggregator;
 import org.junit.jupiter.params.converter.ArgumentConversionException;
-import org.junit.jupiter.params.converter.ConvertWith;
 import org.junit.jupiter.params.converter.SimpleArgumentConverter;
 import org.junit.jupiter.params.provider.CsvSource;
-import org.junit.jupiter.params.provider.ValueSource;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-@DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
+// @ExtendWith(FindSecondTestExtension.class) -> 이 방법의 경우 인스턴스 수정이 불가
+@TestInstance(TestInstance.Lifecycle.PER_CLASS) // 이 어노테이션을 건 경우 @BeforeAll, @AfterAll 의 함수가 static이 아니어도 OK
+@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 class StudyTest {
 
+   @RegisterExtension
+   static FindSecondTestExtension findSecondTestExtension = new FindSecondTestExtension(1000L);
+
+    @Order(1)
     @FirstTest
     @DisplayName("스터디 만들기 📖")
     void create_Study() {
@@ -37,9 +48,11 @@ class StudyTest {
 //        assertTrue(study.getLimit() > 0, "스터디 최대 참석 인원은 0명 초과 ");
     }
 
-    @SecondTest
+    @Order(2)
+    @Test
     @DisplayName("스터디 만들기2 📚")
-    void create_another_study() {
+    void create_another_study() throws InterruptedException {
+        Thread.sleep(1005L);
         System.out.println("create1");
     }
 
@@ -53,11 +66,18 @@ class StudyTest {
     //@ValueSource(strings = { "The", "weather", "is", "getting", "warmer." })
     // @ValueSource(ints = {10, 20, 40})
     @CsvSource({"10, 'java'", "20, spring "})
-    void parameterizedTest(Integer limit, String name) {
-        Study study = new Study(limit, name);
+    void parameterizedTest(@AggregateWith(StudyAggregator.class) Study study) {
         System.out.println(study);
     }
 
+    // Aggregator 사용조건 -> inner static class OR public class 로 만들어야 사용가능!
+    static class StudyAggregator implements ArgumentsAggregator {
+
+        @Override
+        public Object aggregateArguments(ArgumentsAccessor accessor, ParameterContext context) throws ArgumentsAggregationException {
+            return new Study(accessor.getInteger(0), accessor.getString( 1));
+        }
+    }
 
     static class StudyConverter extends SimpleArgumentConverter {
 
