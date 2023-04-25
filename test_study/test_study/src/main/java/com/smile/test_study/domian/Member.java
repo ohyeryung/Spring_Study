@@ -13,7 +13,7 @@ import javax.persistence.Id;
 public class Member {
 
     @Id @GeneratedValue
-    private Long memberId;
+    private Long id;
 
     private String email;
 

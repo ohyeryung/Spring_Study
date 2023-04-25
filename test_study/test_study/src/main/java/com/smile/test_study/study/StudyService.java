@@ -4,6 +4,8 @@ import com.smile.test_study.domian.Member;
 import com.smile.test_study.domian.Study;
 import com.smile.test_study.member.MemberService;
 
+import java.util.Optional;
+
 public class StudyService {
 
     private final MemberService memberService;
@@ -17,12 +19,12 @@ public class StudyService {
         this.repository = repository;
     }
 
-    public Study creatNewStudy(Long memberId, Study study) {
-       Member member = memberService.findById(memberId);
-       if (member == null) {
+    public void creatNewStudy(Long memberId, Study study) {
+       Optional<Member> member = memberService.findById(memberId);
+       if (member.isEmpty()) {
            throw new IllegalArgumentException("Member doesn't exist for id: '" + memberId);
        }
-       study.setOwnerId(memberId);
-       return repository.save(study);
+       study.setOwner(member.get());
+        repository.save(study);
     }
 }
