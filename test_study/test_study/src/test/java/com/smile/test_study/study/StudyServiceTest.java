@@ -5,6 +5,7 @@ import com.smile.test_study.domian.Study;
 import com.smile.test_study.member.MemberService;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InOrder;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
@@ -12,8 +13,7 @@ import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 class StudyServiceTest {
@@ -52,7 +52,7 @@ class StudyServiceTest {
     }
 
     @Test
-    void createStudy() {
+    void createAnotherStudy() {
         StudyService studyService = new StudyService(memberService, studyRepository);
         assertNotNull(studyService);
 
@@ -65,16 +65,26 @@ class StudyServiceTest {
         // TODO memberService 객체에 findById 메소드를 1L 값으로 호출하면 Optional.of(member) 객체를 리턴하도록 Stubbing
         when(memberService.findById(1L)).thenReturn(Optional.of(member));
 
-        Optional<Member> findById = memberService.findById(1L);
-        assertEquals("yeryung@email.com", findById.get().getEmail());
-
         // TODO studyRepository 객체에 save 메소드를 study 객체로 호출하면 study 객체 그대로 리턴하도록 Stubbing
-
         when(studyRepository.save(study)).thenReturn(study);
-        assertEquals(5, study.getLimit());
 
         studyService.creatNewStudy(1L, study);
+
         assertEquals(member, study.getOwner());
+
+        // 해당 메소드가 몇 번 실행됐는 지 검증 (verify())
+        verify(memberService, times(1)).notify(study);
+        verify(memberService, times(1)).notify(member);
+
+        verify(memberService, never()).validate(any());
+
+        // 순서대로 검증이 이뤄져야만 test 통과!
+        InOrder inOrder = inOrder(memberService);
+        inOrder.verify(memberService).notify(study);
+        inOrder.verify(memberService).notify(member);
+
+        // 해당 클래스 내에서 앞의 동작 이후 더 이상의 액션이 없어야 한다는 메소드
+        verifyNoMoreInteractions(memberService);
     }
 
 }
