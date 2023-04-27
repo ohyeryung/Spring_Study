@@ -35,10 +35,6 @@ class StudyServiceTest {
         StudyService studyService = new StudyService(memberService, studyRepository);
         assertNotNull(studyService);
 
-        // mock 객체 만드는 방법 1 Mockito.mock 안에 사용하고자 하는 인터페이스 주입
-        // MemberService memberService = mock(MemberService.class);
-        // StudyRepository studyRepository = mock(StudyRepository.class);
-
         Member member = new Member();
         member.setId(1L);
         member.setEmail("yeryung@email.com");
