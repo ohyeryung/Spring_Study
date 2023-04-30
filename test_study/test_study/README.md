@@ -36,9 +36,6 @@
             }
         }
 
-
-
-
 ✔️ verify() 사용 예시
 
     // 해당 메소드가 몇 번 실행됐는 지 검증 (verify())
@@ -51,6 +48,14 @@
 
      // 해당 클래스 내에서 앞의 동작 이후 더 이상의 액션이 없어야 한다는 메소드
     verifyNoMoreInteractions(memberService);
+
+✔️ stubbing
+: : 만들어진 mock 객체의 메소드를 실행했을 때 어떤 리턴 값을 리턴할지를 정의하는 것
+
+    when("메소드가 진행될 조건").thenReturn("리턴할 값");
+
+    when(memberService.findById(1L)).thenReturn(Optional.of(member));
+    when(studyRepository.save(study)).thenReturn(study);
 
 ✔️ 자주 쓰이는 애노테이션
 
