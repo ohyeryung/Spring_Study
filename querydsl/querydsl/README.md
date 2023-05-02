@@ -11,7 +11,7 @@
     querydsl 5.0.0
 
 
-✔️ build.gradle 
+✔️ build.gradle 설정
 : 
 
     buildscript {
@@ -53,3 +53,40 @@
     }
     //querydsl 추가 끝
 
+<br>
+
+✔️ Q class 인스턴스 사용
+    
+    QMember qMember = new QMember("m"); //별칭 직접 지정 
+    QMember qMember = QMember.member; //기본 인스턴스 사용
+
+<br>
+
+✔️ static import와 함께 사용
+
+    import static study.querydsl.entity.QMember.*;
+   
+    @Test
+    public void startQuerydsl3() {
+        //member1 찾기
+        Member findMember = queryFactory
+        .select(member)
+        .from(member)
+        .where(member.username.eq("member1"))
+        .fetchOne();
+
+        assertThat(findMember.getUsername()).isEqualTo("member1");
+
+    }
+
+<br>
+
+✔️ 결과 조회
+
+- <code>fetch()</code> : 리스트 조회, 데이터 없으면 빈 리스트 반환 
+- <code>fetchOne()</code> : 단 건 조회 
+  - 결과가 없으면 : <code>null</code>
+  - 결과가 둘 이상이면 : <code>com.querydsl.core.NonUniqueResultException</code> 
+- <code>fetchFirst()</code> : <code>limit(1).fetchOne()</code>
+- <code>fetchResults()</code> : 페이징 정보 포함, total count 쿼리 추가 실행, 현재는 <code>deprecated 상태</code> (2023.05 기준) 
+- <code>fetchCount()</code> : count 쿼리로 변경해서 count 수 조회
