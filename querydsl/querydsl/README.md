@@ -90,3 +90,28 @@
 - <code>fetchFirst()</code> : <code>limit(1).fetchOne()</code>
 - <code>fetchResults()</code> : 페이징 정보 포함, total count 쿼리 추가 실행, 현재는 <code>deprecated 상태</code> (2023.05 기준) 
 - <code>fetchCount()</code> : count 쿼리로 변경해서 count 수 조회
+
+<br>
+
+✔️ 서브 쿼리(Sub Query) 사용 예시 (where절, select절 모두 사용 가능)
+
+    /**
+     * 나이가 가장 많은 회원 조회
+     */
+
+    @Test
+    public void subQuery() throws Exception {
+      QMember memberSub = new QMember("memberSub");
+      List<Member> result = queryFactory
+                  .selectFrom(member) // select + from 함께사용 가능
+                  .where(member.age.eq(
+                      JPAExpressions
+                            .select(memberSub.age.max())
+                            .from(memberSub)
+                  )) 
+                  .fetch();
+
+      assertThat(result).extracting("age")
+                .containsExactly(40);
+
+    }
