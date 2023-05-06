@@ -115,3 +115,21 @@
                 .containsExactly(40);
 
     }
+
+
+✔️ 서브 쿼리 사용 예시 (select절)
+
+    List<Tuple> fetch = queryFactory
+          .select(member.username,
+                JPAExpressions
+                .select(memberSub.age.avg())
+                .from(memberSub)
+          ).from(member)
+          .fetch();
+
+    for (Tuple tuple : fetch) {
+        System.out.println("username = " + tuple.get(member.username));
+        System.out.println("age = " +
+      tuple.get(JPAExpressions.select(memberSub.age.avg())
+            .from(memberSub)));
+    }
