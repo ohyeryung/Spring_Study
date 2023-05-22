@@ -30,9 +30,16 @@ dependencies {
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.7.0'
     testImplementation 'org.junit.jupiter:junit-jupiter-params:5.7.0'
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.7.0'
-    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-migrationsupport:5.7.0'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-migrationsupport:5.9.2'
 
-    testImplementation "org.testcontainers:testcontainers:1.18.0"
+    // TestContainers
+    testImplementation "org.junit.jupiter:junit-jupiter:5.8.1"
+    testImplementation 'org.testcontainers:testcontainers:1.17.6'
+    testImplementation "org.testcontainers:junit-jupiter:1.18.1"
+    testImplementation "org.testcontainers:postgresql:1.18.1"
+
+    implementation group: 'org.postgresql', name: 'postgresql', version: '42.2.27' // 추가
+    runtimeOnly 'org.postgresql:postgresql' // 추가
 }
 
 tasks.named('test') {
