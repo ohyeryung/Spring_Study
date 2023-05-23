@@ -29,7 +29,7 @@ class StudyTest {
     @DisplayName("스터디 만들기 📖")
     void create_Study() {
         Study study = new Study(10);
-        assertThat(study.getLimit()).isGreaterThan(0);
+        assertThat(study.getLimitCnt()).isGreaterThan(0);
 
 //        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> new Study(-10));
 //        // assertThrows(어떤 타입의 에러가 발생하는지, 어느 코드를 실행했을 때 발생하는지);

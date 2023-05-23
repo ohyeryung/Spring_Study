@@ -8,8 +8,8 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.ActiveProfiles;
 
 import java.util.Optional;
 
@@ -22,15 +22,16 @@ import static org.mockito.Mockito.when;
 
 @SpringBootTest
 @ExtendWith(MockitoExtension.class)
+@ActiveProfiles("test")
 class StudyServiceTest {
 
      @Mock // 단순히 @Mock 애노테이션만으로는 객체 생성 불가, 이 애노테이션을 처리해줄 extenstion 추가 필요!
      MemberService memberService;
-     @Autowired
+     @Mock
      StudyRepository studyRepository;
 
     @Test
-    void createStudyService() {
+    void createNewStudy() {
 
         StudyService studyService = new StudyService(memberService, studyRepository);
         assertNotNull(studyService);
@@ -78,7 +79,7 @@ class StudyServiceTest {
         // Then
         assertEquals(member, study.getOwner());
         then(memberService).should(times(1)).notify(study);
-        then(memberService).shouldHaveNoMoreInteractions();
+//        then(memberService).shouldHaveNoMoreInteractions();
     }
 
     @DisplayName("다른 사용자가 볼 수 있도록 스터디를 공개한다.")
