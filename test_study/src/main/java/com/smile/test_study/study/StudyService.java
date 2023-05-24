@@ -9,7 +9,6 @@ import java.util.Optional;
 public class StudyService {
 
     private final MemberService memberService;
-
     private final StudyRepository repository;
 
     public StudyService(MemberService memberService, StudyRepository repository) {
@@ -21,20 +20,17 @@ public class StudyService {
 
     public void creatNewStudy(Long memberId, Study study) {
        Optional<Member> member = memberService.findById(memberId);
-       if (member.isEmpty()) {
-           throw new IllegalArgumentException("Member doesn't exist for id: '" + memberId);
-       }
-       study.setOwner(member.get());
+       study.setOwner(member.orElseThrow(
+               () -> new IllegalArgumentException("Member doesn't exist for id : '" + memberId + "'" )
+       ));
        Study newStudy = repository.save(study);
        memberService.notify(newStudy);
-       memberService.notify(member.get());
     }
 
-    public Study openStudy(Study study) {
+    public void openStudy(Study study) {
         study.open();
         Study openedStudy = repository.save(study);
         memberService.notify(openedStudy);
-        return openedStudy;
     }
 
 }
