@@ -1,4 +1,4 @@
-## 개발용 DB
+## 개발용 DB, : 기준 왼쪽 port가 host port (local), 오른쪽 port가 container 안에서 expose 하는 port
 docker run -p 5432:5432 --name study-db -e POSTGRES_USER=study -e POSTGRES_PASSWORD=study -e POSTGRES_DB=study -d postgres
 
 ## 테스트용 DB

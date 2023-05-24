@@ -21,19 +21,20 @@ repositories {
 dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
     implementation 'org.springframework.boot:spring-boot-starter-web'
+    testImplementation 'org.projectlombok:lombok:1.18.22'
     compileOnly 'org.projectlombok:lombok'
     runtimeOnly 'com.h2database:h2'
     runtimeOnly 'mysql:mysql-connector-java'
     annotationProcessor 'org.projectlombok:lombok'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
 
+    testImplementation 'org.junit.jupiter:junit-jupiter:5.9.2'
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.7.0'
     testImplementation 'org.junit.jupiter:junit-jupiter-params:5.7.0'
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.7.0'
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-migrationsupport:5.9.2'
 
     // TestContainers
-    testImplementation "org.junit.jupiter:junit-jupiter:5.8.1"
     testImplementation 'org.testcontainers:testcontainers:1.17.6'
     testImplementation "org.testcontainers:junit-jupiter:1.18.1"
     testImplementation "org.testcontainers:postgresql:1.18.1"
