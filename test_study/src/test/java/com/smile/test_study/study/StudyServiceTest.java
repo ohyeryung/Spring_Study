@@ -3,19 +3,24 @@ package com.smile.test_study.study;
 import com.smile.test_study.domian.Member;
 import com.smile.test_study.domian.Study;
 import com.smile.test_study.member.MemberService;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.util.TestPropertyValues;
+import org.springframework.context.ApplicationContextInitializer;
+import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.test.context.ActiveProfiles;
-import org.testcontainers.containers.GenericContainer;
+import org.springframework.test.context.ContextConfiguration;
+import org.testcontainers.containers.DockerComposeContainer;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
 
+import java.io.File;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -28,29 +33,23 @@ import static org.mockito.Mockito.when;
 @ExtendWith(MockitoExtension.class)
 @ActiveProfiles("test")
 @Testcontainers
+@ContextConfiguration(initializers = StudyServiceTest.ContainerPropertyInitializer.class)
 class StudyServiceTest {
 
      @Mock // 단순히 @Mock 애노테이션만으로는 객체 생성 불가, 이 애노테이션을 처리해줄 extenstion 추가 필요!
      MemberService memberService;
      @Autowired
      StudyRepository studyRepository;
+     @Value("${container.port}") int port;
 
      @Container
-     static GenericContainer container = new GenericContainer("postgres")
-             .withExposedPorts(5432)
-             .withEnv("POSTGRES_DB", "studytest");
-
-     @BeforeEach
-     void beforeEach() {
-         System.out.println("=================================");
-         System.out.println("container.getMappedPort(5432) = " + container.getMappedPort(5432));
-         System.out.println("=================================");
-         System.out.println(container.getLogs());
-         studyRepository.deleteAll();
-     }
+     static DockerComposeContainer composeContainer = new DockerComposeContainer(new File("src/test/resources/docker-compose.yml"))
+             .withExposedService("study-db", 5432);
 
     @Test
-    void createNewStudy() {
+    void  createNewStudy() {
+        System.out.println("=================");
+        System.out.println("port = " + port);
 
         StudyService studyService = new StudyService(memberService, studyRepository);
         assertNotNull(studyService);
@@ -91,4 +90,12 @@ class StudyServiceTest {
 
     }
 
+    static class ContainerPropertyInitializer implements ApplicationContextInitializer<ConfigurableApplicationContext> {
+
+        @Override
+        public void initialize(ConfigurableApplicationContext context) {
+            TestPropertyValues.of("container.port=" + composeContainer.getServicePort("study-db", 5432))
+                    .applyTo(context.getEnvironment());
+        }
+    }
 }
