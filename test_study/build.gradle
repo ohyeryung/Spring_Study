@@ -41,6 +41,11 @@ dependencies {
 
     implementation group: 'org.postgresql', name: 'postgresql', version: '42.2.27' // 추가
     runtimeOnly 'org.postgresql:postgresql' // 추가
+
+    // chaos-monkey
+    implementation 'de.codecentric:chaos-monkey-spring-boot:2.1.1'
+    implementation 'org.springframework.boot:spring-boot-starter-actuator'
+
 }
 
 tasks.named('test') {
