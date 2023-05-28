@@ -1,6 +1,5 @@
 package com.smile.test_study.domian;
 
-import com.smile.test_study.study.StudyStatus;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;

@@ -2,6 +2,7 @@ package com.smile.test_study.study;
 
 import com.smile.test_study.domian.Member;
 import com.smile.test_study.domian.Study;
+import com.smile.test_study.domian.StudyStatus;
 import com.smile.test_study.member.MemberService;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -48,8 +49,6 @@ class StudyServiceTest {
 
     @Test
     void  createNewStudy() {
-        System.out.println("=================");
-        System.out.println("port = " + port);
 
         StudyService studyService = new StudyService(memberService, studyRepository);
         assertNotNull(studyService);
