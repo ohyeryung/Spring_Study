@@ -1,8 +1,8 @@
 package com.smile.test_study.study;
 
-import com.smile.test_study.domian.Member;
-import com.smile.test_study.domian.Study;
-import com.smile.test_study.domian.StudyStatus;
+import com.smile.test_study.domain.Member;
+import com.smile.test_study.domain.Study;
+import com.smile.test_study.domain.StudyStatus;
 import com.smile.test_study.member.MemberService;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

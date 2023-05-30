@@ -1,4 +1,4 @@
-package com.smile.test_study.domian;
+package com.smile.test_study.domain;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;

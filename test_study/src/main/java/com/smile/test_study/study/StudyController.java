@@ -1,6 +1,6 @@
 package com.smile.test_study.study;
 
-import com.smile.test_study.domian.Study;
+import com.smile.test_study.domain.Study;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 

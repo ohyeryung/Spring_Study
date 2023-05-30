@@ -1,6 +1,6 @@
 package com.smile.test_study;
 
-import com.smile.test_study.domian.Study;
+import com.smile.test_study.domain.Study;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.extension.ParameterContext;
 import org.junit.jupiter.api.extension.RegisterExtension;

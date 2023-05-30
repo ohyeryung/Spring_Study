@@ -1,7 +1,7 @@
 package com.smile.test_study.member;
 
-import com.smile.test_study.domian.Member;
-import com.smile.test_study.domian.Study;
+import com.smile.test_study.domain.Member;
+import com.smile.test_study.domain.Study;
 
 import java.util.Optional;
 
