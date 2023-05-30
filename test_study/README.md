@@ -4,9 +4,11 @@
 #### 공부한 내용 요약
 
 - project version
-          
-      java 11
-      gradle 2.7.4
+
+      JDK        JDK 11
+      Build      Gradle 7.6.1
+      Framework  Spring Boot 2.7.4
+
 
 
 ✔️ mock 객체 만드는 방법
