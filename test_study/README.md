@@ -3,6 +3,11 @@
 
 #### 공부한 내용 요약
 
+- project version
+          
+      java 11
+      gradle 2.7.4
+
 
 ✔️ mock 객체 만드는 방법
 
@@ -60,3 +65,46 @@
 ✔️ 자주 쓰이는 애노테이션
 
     @DisplayName() : 테스트의 이름을 지정
+
+<br>
+
+✔️TestContainers 추가
+
+- build.gradle
+
+      testImplementation 'org.testcontainers:testcontainers:1.17.6'
+      testImplementation 'org.testcontainers:junit-jupiter:1.18.1'
+      // DB를 postgresql로 사용 중이므로 아래 설정을 추가
+      testImplementation "org.testcontainers:postgresql:1.18.1"
+
+<br>
+
+✔️ Jmeter 설치 및 실행 명령어
+
+- 설치
+
+      brew install Jmeter
+
+- 실행
+
+      cd /opt/homebrew/bin
+      open jmeter
+
+
+<br>
+
+✔️ ChaosMonkey 추가
+
+- build.gradle
+
+      implementation 'de.codecentric:chaos-monkey-spring-boot:2.1.1'
+      implementation 'org.springframework.boot:spring-boot-starter-actuator'
+
+<br>
+
+✔️ ArchUnit 추가
+
+- build.gradle
+
+      testImplementation 'com.tngtech.archunit:archunit:1.0.0'
+      testImplementation 'com.tngtech.archunit:archunit-junit5-engine:1.0.0'
