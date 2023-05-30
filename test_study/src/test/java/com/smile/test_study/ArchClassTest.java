@@ -22,7 +22,7 @@ public class ArchClassTest {
             .should().accessClassesThat().haveSimpleNameEndingWith("Service");
 
     @ArchTest
-    ArchRule studyClassesRule = classes().that().haveSimpleNameStartingWith("study")
+    ArchRule studyClassesRule = classes().that().haveSimpleNameStartingWith("Study")
             .and().areNotEnums()
             .and().areNotAnnotatedWith(Entity.class)
             .should().resideInAnyPackage("..study..");
