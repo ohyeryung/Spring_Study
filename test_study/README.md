@@ -110,3 +110,19 @@
 
       testImplementation 'com.tngtech.archunit:archunit:1.0.0'
       testImplementation 'com.tngtech.archunit:archunit-junit5-engine:1.0.0'
+
+<br>
+[참고]
+
+✔️ assertEquals()
+
+
+- 경로
+
+      import static org.junit.jupiter.api.Assertions.assertEquals;
+
+- build.gradle (사용 중인 java 및 gradle 버전에 맞춰 추가!)
+
+      testImplementation 'org.junit.jupiter:junit-jupiter-api:5.7.0'
+
+<br>
