@@ -3,48 +3,45 @@ package arrangement_2nd;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.Arrays;
 import java.util.StringTokenizer;
 
 public class Bj2738 {
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         StringTokenizer st = new StringTokenizer(br.readLine(), " ");
-        StringBuilder sb = new StringBuilder();
-        
+
         int N = Integer.parseInt(st.nextToken());
-        System.out.println("N = " + N);
         int M = Integer.parseInt(st.nextToken());
-        System.out.println("M = " + M);
 
-        int[] arr1 = new int[N];
-        int[] arr2 = new int[M];
+        int[][] arr1 = new int[N][M];
+        for (int i = 0; i < N; i++) {
+            st = new StringTokenizer(br.readLine(), " ");
+            for (int j = 0; j < M; j++) {
+                int num1 = Integer.parseInt(st.nextToken());
+                arr1[i][j] = num1;
+            }
+        }
 
+        int[][] arr2 = new int[N][M];
+        for (int i = 0; i < N; i++) {
+            st = new StringTokenizer(br.readLine()," ");
+            for (int j = 0; j < M; j++) {
+                int num2 = Integer.parseInt(st.nextToken());
+                arr2[i][j] = num2;
+            }
+        }
+        int[][] sum = new int[N][M];
         for (int i = 0; i < N; i++) {
             for (int j = 0; j < M; j++) {
-                st = new StringTokenizer(br.readLine(), " ");
-                int num = Integer.parseInt(st.nextToken());
-                System.out.println("num = " + num);
-                arr1[j] = num;
-                System.out.println("Arrays.toString(arr1) = " + Arrays.toString(arr1));
+                sum[i][j] = arr1[i][j] + arr2[i][j];
             }
         }
 
         for (int i = 0; i < N; i++) {
             for (int j = 0; j < M; j++) {
-                st = new StringTokenizer(br.readLine()," ");
-                int num = Integer.parseInt(st.nextToken());
-                System.out.println("num = " + num);
-                arr2[j] = num;
-                System.out.println("Arrays.toString(arr2) = " + Arrays.toString(arr2));
+                System.out.print(sum[i][j] + " ");
             }
+            System.out.println();
         }
-
-        for (int i = 0; i < N; i++) {
-            int res = arr1[i] + arr2[i];
-            sb.append(res).append(" ");
-        }
-        System.out.println(sb);
-
     }
 }
