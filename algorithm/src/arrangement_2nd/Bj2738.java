@@ -13,35 +13,35 @@ public class Bj2738 {
         int N = Integer.parseInt(st.nextToken());
         int M = Integer.parseInt(st.nextToken());
 
-        int[][] arr1 = new int[N][M];
+        int[][] matrix1 = new int[N][M];
+        int[][] matrix2 = new int[N][M];
         for (int i = 0; i < N; i++) {
-            st = new StringTokenizer(br.readLine(), " ");
+            st = new StringTokenizer(br.readLine());
             for (int j = 0; j < M; j++) {
-                int num1 = Integer.parseInt(st.nextToken());
-                arr1[i][j] = num1;
+                matrix1[i][j] = Integer.parseInt(st.nextToken());
+            }
+        }
+        for (int i = 0; i < N; i++) {
+            st = new StringTokenizer(br.readLine());
+            for (int j = 0; j < M; j++) {
+                matrix2[i][j] = Integer.parseInt(st.nextToken());
             }
         }
 
-        int[][] arr2 = new int[N][M];
-        for (int i = 0; i < N; i++) {
-            st = new StringTokenizer(br.readLine()," ");
-            for (int j = 0; j < M; j++) {
-                int num2 = Integer.parseInt(st.nextToken());
-                arr2[i][j] = num2;
-            }
-        }
         int[][] sum = new int[N][M];
         for (int i = 0; i < N; i++) {
             for (int j = 0; j < M; j++) {
-                sum[i][j] = arr1[i][j] + arr2[i][j];
+                sum[i][j] = matrix1[i][j] + matrix2[i][j];
             }
         }
 
+        StringBuilder sb = new StringBuilder();
         for (int i = 0; i < N; i++) {
             for (int j = 0; j < M; j++) {
-                System.out.print(sum[i][j] + " ");
+                sb.append(sum[i][j]).append(" ");
             }
-            System.out.println();
+            sb.append("\n");
         }
+        System.out.print(sb);
     }
 }
