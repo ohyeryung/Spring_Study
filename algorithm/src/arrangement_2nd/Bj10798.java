@@ -23,9 +23,9 @@ public class Bj10798 {
             }
         }
         for (int j = 0; j < matrix[0].length; j++) {
-            for (int i = 0; i < matrix.length; i++) {
-                if (matrix[i][j] != null) {
-                    sb.append(matrix[i][j]);
+            for (Character[] characters : matrix) {
+                if (characters[j] != null) {
+                    sb.append(characters[j]);
                 }
             }
         }
